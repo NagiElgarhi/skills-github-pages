@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تطبيق الفلاش كارد</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>تطبيق الفلاش كارد</h1>
+
+        <div class="main-menu" id="mainMenu">
+            <button onclick="showContainer('subjectManagement')">إدارة المواد</button>
+            <button onclick="showContainer('cardManagement')">إدارة الأسئلة والأجوبة</button>
+            <button class="play-button" onclick="showContainer('flashcard')">لعب الكارت</button>
+            <button onclick="showContainer('pdfUpload')">تحميل ملف PDF</button>
+        </div>
+
+        <div class="subject-management" id="subjectManagement" style="display: none;">
+            <h2>إدارة المواد</h2>
+            <input type="text" id="subjectInput" placeholder="أضف مادة جديدة">
+            <button onclick="addSubject()">أضف</button>
+            <ul id="subjectList"></ul>
+            <button onclick="showContainer('mainMenu')">العودة إلى القائمة الرئيسية</button>
+        </div>
+
+        <div class="card-management" id="cardManagement" style="display: none;">
+            <h2>إدارة الأسئلة والأجوبة</h2>
+            <select id="subjectDropdownForCards">
+                <option value="">اختر مادة</option>
+            </select>
+            <br>
+            <input type="text" id="questionInput" placeholder="أضف سؤال">
+            <button onclick="startRecognition('question')">🎤</button>
+            <br>
+            <input type="text" id="answerInput" placeholder="أضف إجابة">
+            <button onclick="startRecognition('answer')">🎤</button>
+            <br>
+            <button onclick="addCard()">أضف</button>
+            <ul id="cardList"></ul>
+            <button onclick="showContainer('mainMenu')">العودة إلى القائمة الرئيسية</button>
+        </div>
+
+        <div class="flashcard" id="flashcard" style="display: none;">
+            <div class="card" id="flashcardCard">
+                <div class="front" onclick="flipCard()">
+                    <p id="questionText">سؤال</p>
+                    <button onclick="playSound('question')">🔊</button>
+                    <button onclick="showAnswer(event)">كشف الإجابة</button>
+                </div>
+                <div class="back" onclick="flipCard()">
+                    <p id="answerText">إجابة</p>
+                    <button onclick="playSound('answer')">🔊</button>
+                </div>
+            </div>
+            <button onclick="nextCard()">التالي</button>
+            <button onclick="showContainer('mainMenu')">العودة إلى القائمة الرئيسية</button>
+        </div>
+
+        <div class="pdf-upload" id="pdfUpload" style="display: none;">
+            <h2>تحميل ملف PDF</h2>
+            <input type="file" id="pdfInput" accept="application/pdf">
+            <button onclick="loadPDF()">عرض كامل PDF</button>
+            <br>
+            <textarea id="pdfContent" placeholder="محتوى ملف PDF سيظهر هنا..." rows="10" cols="50"></textarea>
+            <br>
+            <button onclick="analyzePDF()">تحليل النص</button>
+            <button onclick="saveToJson()">حفظ إلى JSON</button>
+            <button onclick="showContainer('mainMenu')">العودة إلى القائمة الرئيسية</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.8.335/pdf.min.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>
